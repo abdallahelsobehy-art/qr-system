@@ -1,11 +1,11 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyDAXHBPfJUr2quRe_80yhEDqGrHaneNmcc",
-  authDomain: "qr-system-45702.firebaseapp.com",
-  databaseURL: "https://qr-system-45702-default-rtdb.firebaseio.com",
-  projectId: "qr-system-45702",
-  storageBucket: "qr-system-45702.firebasestorage.app",
-  messagingSenderId: "983573164670",
-  appId: "1:983573164670:web:4b352977dd6085b0649e2f"
+  apiKey: "AIzaSyBZYTso-siHXUFMoLHVBAEVaduS9lIpwz8",
+  authDomain: "qr-system-b7326.firebaseapp.com",
+  databaseURL: "https://qr-system-b7326-default-rtdb.firebaseio.com",
+  projectId: "qr-system-b7326",
+  storageBucket: "qr-system-b7326.firebasestorage.app",
+  messagingSenderId: "316223189996",
+  appId: "1:316223189996:web:83895e0d6dc28ad99606c9"
 };
 
 firebase.initializeApp(firebaseConfig);
