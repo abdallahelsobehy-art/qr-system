@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>QR Profile</title>
+
+<style>
+
+/* إخفاء الصفحة مؤقتاً في البداية لمنع ظهور أي ومض قبل التحويل المباشر */
+body{
+opacity: 0;
+transition: opacity 0.2s;
+background:url("assets/background.jpg") center center/cover no-repeat;
+background-attachment:fixed;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Tahoma,sans-serif;
+}
+
+.card{
+width:100%;
+max-width:500px;
+text-align:center;
+}
+
+/* إطار اللوجو بنفس خامة ولون أزرار الأيقونات */
+.logo-container{
+width: 100%;
+height: 200px;
+border-radius: 18px;
+margin: 20px auto;
+overflow: hidden;
+position: relative;
+background: url("assets/card-bg.jpg") center center/cover;
+box-shadow: 0 6px 15px rgba(0,0,0,.25);
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 15px;
+}
+
+/* الطبقة الشفافة البيضاء بنفس درجة الأزرار */
+.logo-container::before{
+content: "";
+position: absolute;
+inset: 0;
+background: rgba(255,255,255,.75);
+z-index: 1;
+}
+
+/* صورة اللوجو نفسها فوق الطبقة الشفافة */
+.logo-container img{
+max-width: 100%;
+max-height: 100%;
+object-fit: contain;
+position: relative;
+z-index: 2;
+display: block;
+}
+
+#name{
+color:#fff;
+font-size:34px;
+margin-bottom:5px;
+text-shadow:0 2px 8px rgba(0,0,0,.5);
+}
+
+#description{
+color:#fff;
+font-size:18px;
+margin-bottom:30px;
+text-shadow:0 2px 8px rgba(0,0,0,.5);
+}
+
+
+.btn{
+display:flex;
+align-items:center;
+justify-content:center;
+padding:18px 20px;
+margin-bottom:15px;
+border-radius:18px;
+text-decoration:none;
+color:#111;
+font-size:20px;
+font-weight:bold;
+position:relative;
+overflow:hidden;
+background:url("assets/card-bg.jpg");
+background-size:cover;
+background-position:center;
+box-shadow:0 6px 15px rgba(0,0,0,.25);
+cursor:pointer;
+}
+
+
+.btn::before{
+content:"";
+position:absolute;
+inset:0;
+background:rgba(255,255,255,.75);
+}
+
+
+.btn span{
+position:relative;
+z-index:2;
+}
+
+
+.btn img{
+position:absolute;
+right:20px;
+z-index:2;
+}
+
+.custom-icon{
+width:38px;
+height:38px;
+object-fit:contain;
+}
+
+
+.footer{
+margin-top:20px;
+color:#fff;
+font-size:15px;
+font-weight:bold;
+text-shadow:0 2px 5px rgba(0,0,0,.5);
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="card">
+
+<!-- برواز اللوجو بخامة وتصميم الأزرار -->
+<div id="logoWrapper" class="logo-container" style="display:none;">
+    <img id="logo">
+</div>
+
+
+<h1 id="name"></h1>
+
+<p id="description"></p>
+
+
+<!-- 📞 زر الاتصال المباشر -->
+<a id="phone" class="btn" style="display:none;">
+<img src="assets/call.png" class="custom-icon">
+<span>Call me</span>
+</a>
+
+<!-- واتساب -->
+<a id="whatsapp" class="btn" target="_blank" style="display:none;">
+<img src="assets/whatsapp.png" class="custom-icon">
+<span>WhatsApp</span>
+</a>
+
+<!-- تليجرام -->
+<a id="telegram" class="btn" target="_blank" style="display:none;">
+<img src="assets/telegram.png" class="custom-icon">
+<span>Telegram</span>
+</a>
+
+<!-- مسنجر -->
+<a id="messenger" class="btn" target="_blank" style="display:none;">
+<img src="assets/messenger.png" class="custom-icon">
+<span>Messenger</span>
+</a>
+
+<!-- فيسبوك -->
+<a id="facebook" class="btn" target="_blank" style="display:none;">
+<img src="assets/facebook.png" class="custom-icon">
+<span>Facebook</span>
+</a>
+
+<!-- انستجرام -->
+<a id="instagram" class="btn" target="_blank" style="display:none;">
+<img src="assets/instagram.png" class="custom-icon">
+<span>Instagram</span>
+</a>
+
+<!-- تيك توك -->
+<a id="tiktok" class="btn" target="_blank" style="display:none;">
+<img src="assets/tiktok.png" class="custom-icon">
+<span>TikTok</span>
+</a>
+
+<!-- سناب شات -->
+<a id="snapchat" class="btn" target="_blank" style="display:none;">
+<img src="assets/snapchat.png" class="custom-icon">
+<span>Snapchat</span>
+</a>
+
+<!-- بنترست -->
+<a id="pinterest" class="btn" target="_blank" style="display:none;">
+<img src="assets/pinterest.png" class="custom-icon">
+<span>Pinterest</span>
+</a>
+
+<!-- يوتيوب -->
+<a id="youtube" class="btn" target="_blank" style="display:none;">
+<img src="assets/youtube.png" class="custom-icon">
+<span>YouTube</span>
+</a>
+
+<!-- لينكد إن -->
+<a id="linkedin" class="btn" target="_blank" style="display:none;">
+<img src="assets/linkedin.png" class="custom-icon">
+<span>LinkedIn</span>
+</a>
+
+<!-- الموقع الإلكتروني -->
+<a id="website" class="btn" target="_blank" style="display:none;">
+<img src="assets/website.png" class="custom-icon">
+<span>Website</span>
+</a>
+
+<!-- الكتالوج -->
+<a id="catalog" class="btn" target="_blank" style="display:none;">
+<img src="assets/catalog.png" class="custom-icon">
+<span>Catalog</span>
+</a>
+
+<!-- الجيميل -->
+<a id="gmail" class="btn" target="_blank" style="display:none;">
+<img src="assets/gmail.png" class="custom-icon">
+<span>Email</span>
+</a>
+
+<!-- الموقع الجغرافي -->
+<a id="location" class="btn" target="_blank" style="display:none;">
+<img src="assets/location.png" class="custom-icon">
+<span>Location</span>
+</a>
+
+<!-- ⭐ زر المراجعات -->
+<a id="review" class="btn" target="_blank" style="display:none;">
+<img src="assets/review.png" class="custom-icon">
+<span>Review</span>
+</a>
+
+<!-- InstaPay -->
+<a id="instapay" class="btn" target="_blank" style="display:none;">
+<img src="assets/instapay.png" class="custom-icon">
+<span>InstaPay</span>
+</a>
+
+<!-- Vodafone Cash (Cash) -->
+<a id="vodafonecash" class="btn" target="_blank" style="display:none;">
+<img src="assets/cash.png" class="custom-icon">
+<span>Cash</span>
+</a>
+
+<!-- Orange Cash -->
+<a id="orangecash" class="btn" target="_blank" style="display:none;">
+<img src="assets/orange.png" class="custom-icon">
+<span>Orange Cash</span>
+</a>
+
+<!-- Etisalat Cash -->
+<a id="etisalatcash" class="btn" target="_blank" style="display:none;">
+<img src="assets/etisalat.png" class="custom-icon">
+<span>Etisalat Cash</span>
+</a>
+
+<!-- WE Cash -->
+<a id="wecash" class="btn" target="_blank" style="display:none;">
+<img src="assets/we.png" class="custom-icon">
+<span>WE Cash</span>
+</a>
+
+
+<!-- نص الحقوق الديناميكي -->
+<div id="footerText" class="footer"></div>
+
+
+</div>
+
+
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+
+<script>
+
+
+const firebaseConfig = {
+
+apiKey: "AIzaDAXHBPfJUr2quRe_8OyhEDqGrHaneNmcc",
+
+authDomain: "qr-system-45702.firebaseapp.com",
+
+databaseURL: "https://qr-system-45702-default-rtdb.firebaseio.com",
+
+projectId: "qr-system-45702",
+
+storageBucket: "qr-system-45702.firebasestorage.app",
+
+messagingSenderId: "983573164670",
+
+appId: "1:983573164670:web:4b352977dd6085b0649e2f"
+
+};
+
+
+firebase.initializeApp(firebaseConfig);
+
+
+const db = firebase.database();
+
+
+const params = new URLSearchParams(window.location.search);
+
+const id = params.get("id");
+
+
+
+db.ref("customers/" + id).once("value")
+
+.then(function(snapshot){
+
+
+const data = snapshot.val();
+
+
+
+if(!data){
+
+document.querySelector(".card").innerHTML =
+"<h2 style='color:white'>العميل غير موجود</h2>";
+
+document.body.style.opacity = "1";
+
+return;
+
+}
+
+// التوجيه المباشر لو موجود
+if (data.redirectUrl && data.redirectUrl.trim() !== "") {
+    window.location.replace(data.redirectUrl.trim());
+    return;
+}
+
+
+// إظهار الصفحة
+document.body.style.opacity = "1";
+
+
+// معالجة عرض إطار اللوجو
+const logoElem = document.getElementById("logo");
+const logoWrapper = document.getElementById("logoWrapper");
+
+if (data.logo && data.logo.trim() !== "") {
+    logoElem.src = data.logo;
+    logoWrapper.style.display = "flex";
+} else {
+    logoWrapper.style.display = "none";
+}
+
+
+document.getElementById("name").textContent = data.name || "";
+document.getElementById("description").textContent = data.description || "";
+
+
+// ربط وإظهار الأزرار بناءً على البيانات المتوفرة
+
+if (data.phone && data.phone.trim() !== "") {
+    const phoneBtn = document.getElementById("phone");
+    phoneBtn.href = "tel:" + data.phone.trim();
+    phoneBtn.style.display = "flex";
+}
+
+// واتساب (تحويل مباشر للشات)
+if (data.whatsapp && data.whatsapp.trim() !== "") {
+    const el = document.getElementById("whatsapp");
+    let waNum = data.whatsapp.replace(/\D/g, '');
+    el.href = "https://wa.me/" + waNum;
+    el.style.display = "flex";
+}
+
+if (data.telegram && data.telegram.trim() !== "") {
+    const el = document.getElementById("telegram");
+    el.href = data.telegram.trim();
+    el.style.display = "flex";
+}
+
+if (data.messenger && data.messenger.trim() !== "") {
+    const el = document.getElementById("messenger");
+    el.href = data.messenger.trim();
+    el.style.display = "flex";
+}
+
+if (data.facebook && data.facebook.trim() !== "") {
+    const el = document.getElementById("facebook");
+    el.href = data.facebook.trim();
+    el.style.display = "flex";
+}
+
+if (data.instagram && data.instagram.trim() !== "") {
+    const el = document.getElementById("instagram");
+    el.href = data.instagram.trim();
+    el.style.display = "flex";
+}
+
+if (data.tiktok && data.tiktok.trim() !== "") {
+    const el = document.getElementById("tiktok");
+    el.href = data.tiktok.trim();
+    el.style.display = "flex";
+}
+
+if (data.snapchat && data.snapchat.trim() !== "") {
+    const el = document.getElementById("snapchat");
+    el.href = data.snapchat.trim();
+    el.style.display = "flex";
+}
+
+if (data.pinterest && data.pinterest.trim() !== "") {
+    const el = document.getElementById("pinterest");
+    el.href = data.pinterest.trim();
+    el.style.display = "flex";
+}
+
+if (data.youtube && data.youtube.trim() !== "") {
+    const el = document.getElementById("youtube");
+    el.href = data.youtube.trim();
+    el.style.display = "flex";
+}
+
+if (data.linkedin && data.linkedin.trim() !== "") {
+    const el = document.getElementById("linkedin");
+    el.href = data.linkedin.trim();
+    el.style.display = "flex";
+}
+
+if (data.website && data.website.trim() !== "") {
+    const el = document.getElementById("website");
+    el.href = data.website.trim();
+    el.style.display = "flex";
+}
+
+if (data.catalog && data.catalog.trim() !== "") {
+    const el = document.getElementById("catalog");
+    el.href = data.catalog.trim();
+    el.style.display = "flex";
+}
+
+if (data.gmail && data.gmail.trim() !== "") {
+    const el = document.getElementById("gmail");
+    el.href = "mailto:" + data.gmail.trim();
+    el.style.display = "flex";
+}
+
+if (data.location && data.location.trim() !== "") {
+    const el = document.getElementById("location");
+    el.href = data.location.trim();
+    el.style.display = "flex";
+}
+
+if (data.review && data.review.trim() !== "") {
+    const el = document.getElementById("review");
+    el.href = data.review.trim();
+    el.style.display = "flex";
+}
+
+if (data.instapay && data.instapay.trim() !== "") {
+    const el = document.getElementById("instapay");
+    el.href = "https://ipn.eg/" + data.instapay.trim();
+    el.style.display = "flex";
+}
+
+// فودافون كاش (تم تعديلها لتأخذ اللينك المباشر مباشرة وتفتح تطبيق التحويل)
+if (data.vodafonecash && data.vodafonecash.trim() !== "") {
+    const el = document.getElementById("vodafonecash");
+    el.href = data.vodafonecash.trim();
+    el.style.display = "flex";
+}
+
+// أورنج كاش 
+if (data.orangecash && data.orangecash.trim() !== "") {
+    const el = document.getElementById("orangecash");
+    el.href = data.orangecash.trim(); 
+    el.style.display = "flex";
+}
+
+// اتصالات كاش 
+if (data.etisalatcash && data.etisalatcash.trim() !== "") {
+    const el = document.getElementById("etisalatcash");
+    el.href = data.etisalatcash.trim(); 
+    el.style.display = "flex";
+}
+
+// وي كاش 
+if (data.wecash && data.wecash.trim() !== "") {
+    const el = document.getElementById("wecash");
+    el.href = data.wecash.trim(); 
+    el.style.display = "flex";
+}
+
+
+// معالجة عرض نص الحقوق (الفوتر)
+document.getElementById("footerText").textContent = 
+    (data.footer && data.footer.trim() !== "") ? data.footer : "جميع الحقوق محفوظة ✓";
+
+});
+
+
+</script>
+
+
+</body>
+</html>
