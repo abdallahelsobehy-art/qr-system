@@ -1002,9 +1002,20 @@
             const nextCode = prefixCode + formattedSeq;
 
             SafeSetValue("code", nextCode);
+   SafeSetValue(
+    "redirectUrl",
+    "https://abdallahelsobehy-art.github.io/Qr-codes/?code=" + nextCode
+);
+        
         }).catch(err => {
             // حالة احتياطية لو القاعدة فارغة
             SafeSetValue("code", prefixCode + "00001");
+
+            SafeSetValue(
+    "redirectUrl",
+    "https://abdallahelsobehy-art.github.io/Qr-codes/?code=" + (prefixCode + "00001")
+);
+            
         });
     }
 
