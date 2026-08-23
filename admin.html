@@ -1051,12 +1051,13 @@
         db.ref("customers").on("value", function(snapshot) {
             const select = document.getElementById("customerSelect");
             select.innerHTML = '<option value="">اختر العميل</option>';
-            snapshot.forEach(function(child) {
-                const data = child.val();
-                const option = document.createElement("option");
-                option.value = child.key;
-                option.textContent = (data.name || "بدون اسم") + " (" + child.key + ")";
-                select.appendChild(option);
+            
+snapshot.forEach(function(child) {
+    const data = child.val();
+    const option = document.createElement("option");
+    option.value = child.key;
+    option.textContent = (data.name || "بدون اسم") + " (" + child.key + ")";
+    select.appendChild(option);
             });
         });
     }
