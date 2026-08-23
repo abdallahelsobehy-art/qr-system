@@ -480,8 +480,7 @@
             border: none;
             border-radius: 6px;
             font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
+            font-weight: bold;cursor: pointer;
         }
 
         .btn-modal-ok { background-color: #111; color: #fff; }
@@ -1020,11 +1019,8 @@
                 option.value = child.key;
                 option.textContent = (data.name || "بدون اسم") + " (" + child.key + ")";
                 select.appendChild(option);
-            });
-        });
-    }
 
-    function loadSelectedCustomer() {
+                             function loadSelectedCustomer() {
         const id = SafeGetValue("customerSelect");
         if (!id) return;
 
@@ -1284,4 +1280,49 @@
         const finalLogo = SafeGetValue("qrCustomLogo") || SafeGetValue("logo");
         const currentLogo = (embedLogo === "yes" && finalLogo) ? finalLogo : "";
 
-        const targetURL = window
+        const targetURL = window.location.origin + window.location.pathname.replace("admin.html", "qr.html") + "?id=" + encodeURIComponent(code);
+
+        const downloadSize = parseInt(document.getElementById("downloadSize")?.value) || 2000;
+
+        const qrDownload = new QRCodeStyling({
+            width: downloadSize,
+            height: downloadSize,
+            type: "svg",
+            data: targetURL,
+
+            image: currentLogo || "",
+
+            dotsOptions: {
+                color: dotColor,
+                type: dotType
+            },
+
+            backgroundOptions: {
+                color: bgColor
+            },
+
+            cornersSquareOptions: {
+                type: cornerType,
+                color: cornerColor
+            },
+
+            cornersDotOptions: {
+                type: cornerDotType,
+                color: cornerDotColor
+            },
+
+            imageOptions: {
+                crossOrigin: "anonymous",
+                margin: 4,
+                imageSize: 0.25
+            }
+        });
+
+        qrDownload.download({
+            name: code,
+            extension: selectedFormat
+        });
+    }
+</script>
+</body>
+</html>
