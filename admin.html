@@ -659,10 +659,11 @@
                     <div class="form-group" style="margin-bottom:5px;">
                         <label style="text-align:right;"><i class="fa-solid fa-expand"></i> أبعاد المقاس (Size)</label>
                         <select id="downloadSize">
-                            <option value="300">300x300 px</option>
-                            <option value="1000" selected>1000x1000 px (قياسي للطباعة)</option>
-                            <option value="2000">2000x2000 px (HQ)</option>
-                            <option value="4000">4000x4000 px (Ultra HD)</option>
+                            <option value="300">300x300</option>
+                            <option value="1000">1000x1000</option>
+                            <option value="2000" selected>2000x2000</option>
+                            <option value="4000">4000x4000</option>
+                            <option value="6000">6000x6000 (Print)</option>
                         </select>
                     </div>
                 </div>
@@ -930,19 +931,18 @@
     }
 
     const firebaseConfig = {
-  apiKey: "AIzaSyB2YTSo-sIhXUFMOlHV8AEVaduS9l1pwz8",
-  authDomain: "qr-system-b7326.firebaseapp.com",
-  databaseURL: "https://qr-system-b7326-default-rtdb.firebaseio.com",
-  projectId: "qr-system-b7326",
-  storageBucket: "qr-system-b7326.firebasestorage.app",
-  messagingSenderId: "316223189996",
-  appId: "1:316223189996:web:83895e0d6dc28ad99606c9",
-  measurementId: "G-RZLFVNXNV1"
-};
+      apiKey: "AIzaSyB2YTSo-sIhXUFMOlHV8AEVaduS9l1pwz8",
+      authDomain: "qr-system-b7326.firebaseapp.com",
+      databaseURL: "https://qr-system-b7326-default-rtdb.firebaseio.com",
+      projectId: "qr-system-b7326",
+      storageBucket: "qr-system-b7326.firebasestorage.app",
+      messagingSenderId: "316223189996",
+      appId: "1:316223189996:web:83895e0d6dc28ad99606c9",
+      measurementId: "G-RZLFVNXNV1"
+    };
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
     let qrCodeInstance = null;
 
@@ -1247,9 +1247,9 @@ const db = firebase.database();
         }
 
         const qrConfig = {
-            width: 260,
-            height: 260,
-            type: "canvas",
+            width: 500,
+            height: 500,
+            type: "svg",
             data: targetURL,
             dotsOptions: { color: dotColor, type: dotType },
             backgroundOptions: { color: bgColor },
@@ -1269,17 +1269,19 @@ const db = firebase.database();
     function downloadQR() {
         const code = SafeGetValue("code") || "QR_Code";
         const selectedFormat = SafeGetValue("downloadFormat") || "png";
-        const selectedSize = parseInt(SafeGetValue("downloadSize")) || 1000;
+        
+        const dotColor = SafeGetValue("qrDotColor") || "#000000";
+        const bgColor = SafeGetValue("qrBgColor") || "#ffffff";
+        const dotType = SafeGetValue("qrDotType") || "square";
+        
+        const cornerType = SafeGetValue("qrCornerType") || "square";
+        const cornerColor = SafeGetValue("qrCornerColor") || dotColor;
+        
+        const cornerDotType = SafeGetValue("qrCornerDotType") || "square";
+        const cornerDotColor = SafeGetValue("qrCornerDotColor") || dotColor;
 
-        if (qrCodeInstance) {
-            qrCodeInstance.download({
-                name: code,
-                extension: selectedFormat
-            });
-        } else {
-            showCustomAlert("يرجى توليد الـ QR أولاً قبل التحميل");
-        }
-    }
-</script>
-</body>
-</html>
+        const embedLogo = SafeGetValue("qrEmbedLogo");
+        const finalLogo = SafeGetValue("qrCustomLogo") || SafeGetValue("logo");
+        const currentLogo = (embedLogo === "yes" && finalLogo) ? finalLogo : "";
+
+        const targetURL = window
