@@ -1052,13 +1052,27 @@
             const select = document.getElementById("customerSelect");
             select.innerHTML = '<option value="">اختر العميل</option>';
             
+let customers = [];
+
 snapshot.forEach(function(child) {
-    const data = child.val();
+    customers.push({
+        key: child.key,
+        data: child.val()
+    });
+});
+
+customers.sort((a, b) => {
+    return parseInt(a.key.slice(-5)) - parseInt(b.key.slice(-5));
+});
+
+customers.forEach(function(customer) {
     const option = document.createElement("option");
-    option.value = child.key;
-    option.textContent = (data.name || "بدون اسم") + " (" + child.key + ")";
+    option.value = customer.key;
+    option.textContent =
+        (customer.data.name || "بدون اسم") +
+        " (" + customer.key + ")";
     select.appendChild(option);
-            });
+});
         });
     }
 
