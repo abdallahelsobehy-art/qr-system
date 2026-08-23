@@ -967,13 +967,23 @@
         return el ? el.value.trim() : "";
     }
 
-    function generateNextCustomerCode() {
+        function generateNextCustomerCode() {
+        // 1. توليد 7 أرقام عشوائية فريدة ومستحيلة التشابه لتكون هي الجزء الأول
+        let randomPrefixNums = "";
+        for (let i = 0; i < 7; i++) {
+            randomPrefixNums += Math.floor(Math.random() * 10); // يختار رقم عشوائي من 0 لـ 9
+        }
+        
+        const prefixCode = "CODE:" + randomPrefixNums;
+
+        // 2. البحث في قاعدة البيانات لمعرفة آخر رقم تسلسلي (Sequence) تم إضافته
         db.ref("customers").once("value").then(snapshot => {
             const data = snapshot.val();
             let maxSeq = 0;
 
             if (data) {
                 Object.keys(data).forEach(key => {
+                    // استخلاص آخر 5 أرقام من الكود المخزن في القاعدة
                     if (key.length >= 5) {
                         const lastFive = key.slice(-5);
                         const num = parseInt(lastFive, 10);
@@ -984,15 +994,20 @@
                 });
             }
 
+            // الرقم التسلسلي التالي (يزيد واحد عن الأخير)
             const nextSeq = maxSeq + 1;
-            const prefixCode = "CODE:0458456"; 
-            const nextCode = prefixCode + String(nextSeq).padStart(5, "0");
-            
+            const formattedSeq = String(nextSeq).padStart(5, "0"); // لضمان ظهورها 5 خانات مثل 00001
+
+            // 3. دمج الـ 7 أرقام العشوائية مع الـ 5 أرقام التسلسلية
+            const nextCode = prefixCode + formattedSeq;
+
             SafeSetValue("code", nextCode);
         }).catch(err => {
-            SafeSetValue("code", "CODE:045845600001");
+            // حالة احتياطية لو القاعدة فارغة
+            SafeSetValue("code", prefixCode + "00001");
         });
     }
+
 
     function handleMainLogoUpload(input) {
         if (input.files && input.files[0]) {
