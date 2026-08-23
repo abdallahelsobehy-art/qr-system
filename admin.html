@@ -1178,6 +1178,9 @@ customers.forEach(function(customer) {
         db.ref("customers/" + code).set(customerData)
             .then(function() {
                 showCustomAlert("تم حفظ بيانات العميل بنجاح!", function() {
+                if (confirm("هل تريد تحميل ملف الـ QR الآن؟")) {
+    downloadQR();
+                }  
                     clearForm();
                 });
             })
