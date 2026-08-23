@@ -1176,17 +1176,17 @@ customers.forEach(function(customer) {
         };
 
         db.ref("customers/" + code).set(customerData)
-            .then(function() {
-                showCustomAlert("تم حفظ بيانات العميل بنجاح!", function() {
-                if (confirm("هل تريد تحميل ملف الـ QR الآن؟")) {
-    downloadQR();
-                }  
-                    clearForm();
-                });
-            })
-            .catch(function(error) {
-                showCustomAlert("خطأ أثناء الحفظ: " + error.message);
-            });
+.then(function() {
+    showCustomAlert("تم حفظ بيانات العميل بنجاح");
+    showCustomConfirm("هل تريد تحميل ملف الـ QR الآن؟", function() {
+        downloadQR();
+    });
+    clearForm();
+})
+.catch(function(error) {
+    showCustomAlert("خطأ أثناء الحفظ: " + error.message);
+});
+
     }
 
     function deleteCustomer() {
