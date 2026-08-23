@@ -490,7 +490,7 @@
 </head>
 <body>
 
-<!-- PWA Install Button -->
+    <!-- PWA Install Button -->
 <button id="installButton">📥 تثبيت التطبيق</button>
 
 <div class="login-overlay" id="loginModal">
@@ -1020,8 +1020,11 @@
                 option.value = child.key;
                 option.textContent = (data.name || "بدون اسم") + " (" + child.key + ")";
                 select.appendChild(option);
+            });
+        });
+    }
 
-                             function loadSelectedCustomer() {
+    function loadSelectedCustomer() {
         const id = SafeGetValue("customerSelect");
         if (!id) return;
 
@@ -1266,6 +1269,7 @@
     function downloadQR() {
         const code = SafeGetValue("code") || "QR_Code";
         const selectedFormat = SafeGetValue("downloadFormat") || "png";
+        const downloadSize = parseInt(SafeGetValue("downloadSize") || "2000", 10);
         
         const dotColor = SafeGetValue("qrDotColor") || "#000000";
         const bgColor = SafeGetValue("qrBgColor") || "#ffffff";
@@ -1283,47 +1287,25 @@
 
         const targetURL = window.location.origin + window.location.pathname.replace("admin.html", "qr.html") + "?id=" + encodeURIComponent(code);
 
-        const downloadSize = parseInt(document.getElementById("downloadSize")?.value) || 2000;
-
-        const qrDownload = new QRCodeStyling({
+        const downloadConfig = {
             width: downloadSize,
             height: downloadSize,
-            type: "svg",
+            type: selectedFormat,
             data: targetURL,
+            dotsOptions: { color: dotColor, type: dotType },
+            backgroundOptions: { color: bgColor },
+            cornersSquareOptions: { type: cornerType, color: cornerColor },
+            cornersDotOptions: { type: cornerDotType, color: cornerDotColor },
+            imageOptions: { crossOrigin: "anonymous", margin: 4, imageSize: 0.26 }
+        };
 
-            image: currentLogo || "",
+        if (currentLogo) {
+            downloadConfig.image = currentLogo;
+        }
 
-            dotsOptions: {
-                color: dotColor,
-                type: dotType
-            },
-
-            backgroundOptions: {
-                color: bgColor
-            },
-
-            cornersSquareOptions: {
-                type: cornerType,
-                color: cornerColor
-            },
-
-            cornersDotOptions: {
-                type: cornerDotType,
-                color: cornerDotColor
-            },
-
-            imageOptions: {
-                crossOrigin: "anonymous",
-                margin: 4,
-                imageSize: 0.25
-            }
-        });
-
-        qrDownload.download({
-            name: code,
-            extension: selectedFormat
-        });
+        const tempQR = new QRCodeStyling(downloadConfig);
+        tempQR.download({ name: "QR_" + code.replace(/[:\/]/g, '_'), extension: selectedFormat });
     }
 </script>
 </body>
-</html>
+    </html>
