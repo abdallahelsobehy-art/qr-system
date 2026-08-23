@@ -881,8 +881,7 @@
     }
 
     function showCustomConfirm(message, onConfirm) {
-
-        function showCustomConfirm(message, onConfirm, confirmText = "تأكيد", confirmColor = "#c53030") {
+function showCustomConfirm(message, onConfirm, confirmText = "تأكيد", confirmColor = "#c53030") {
     const modal = document.getElementById("customModal");
     const msgEl = document.getElementById("customModalMsg");
     const buttonsEl = document.getElementById("customModalButtons");
@@ -906,8 +905,7 @@
         modal.style.display = "none";
         if (onConfirm) onConfirm();
     };
-        }
-
+}
     function checkLogin() {
         const inputUser = document.getElementById("adminUsername").value.trim();
         const inputPass = document.getElementById("adminPassword").value.trim();
