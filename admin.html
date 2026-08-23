@@ -881,36 +881,32 @@
     }
 
     function showCustomConfirm(message, onConfirm) {
-        const modal = document.getElementById("customModal");
-        const msgEl = document.getElementById("customModalMsg");
-        const buttonsEl = document.getElementById("customModalButtons");
 
-        msgEl.textContent = message;
-        buttonsEl.innerHTML = `
-            <button class="custom-modal-btn btn-modal-cancel" id="modalCancelBtn">إلغاء</button>
-            <button class="custom-modal-btn btn-modal-ok" style="background-color: #c53030;" id="modalConfirmBtn">تـأكيد</button>
-        `;
-        modal.style.display = "flex";
+        function showCustomConfirm(message, onConfirm, confirmText = "تأكيد", confirmColor = "#c53030") {
+    const modal = document.getElementById("customModal");
+    const msgEl = document.getElementById("customModalMsg");
+    const buttonsEl = document.getElementById("customModalButtons");
 
-        document.getElementById("modalCancelBtn").onclick = function() {
-            modal.style.display = "none";
-        };
+    msgEl.textContent = message;
 
-        document.getElementById("modalConfirmBtn").onclick = function() {
-            modal.style.display = "none";
-            if (onConfirm) onConfirm();
-        };
-    }
+    buttonsEl.innerHTML = `
+        <button class="custom-modal-btn btn-modal-cancel" id="modalCancelBtn">إلغاء</button>
+        <button class="custom-modal-btn btn-modal-ok"
+            style="background-color:${confirmColor};"
+            id="modalConfirmBtn">${confirmText}</button>
+    `;
 
-    window.onload = function() {
-        if (sessionStorage.getItem("adminLoggedIn") === "true") {
-            document.getElementById("loginModal").style.display = "none";
-            document.getElementById("adminContainer").style.display = "block";
-            document.getElementById("stickyFooter").style.display = "flex";
-            loadCustomerList();
-            generateNextCustomerCode();
-        }
+    modal.style.display = "flex";
+
+    document.getElementById("modalCancelBtn").onclick = function() {
+        modal.style.display = "none";
     };
+
+    document.getElementById("modalConfirmBtn").onclick = function() {
+        modal.style.display = "none";
+        if (onConfirm) onConfirm();
+    };
+        }
 
     function checkLogin() {
         const inputUser = document.getElementById("adminUsername").value.trim();
@@ -1178,8 +1174,15 @@ customers.forEach(function(customer) {
         db.ref("customers/" + code).set(customerData)
 .then(function() {
     showCustomAlert("تم حفظ بيانات العميل بنجاح", function() {
-        showCustomConfirm("هل تريد تحميل ملف الـ QR الآن؟", function() {
-            downloadQR();
+        showCustomConfirm(
+    "هل تريد تحميل ملف الـ QR الآن؟",
+    function() {
+        downloadQR();
+        clearForm();
+    },
+    "تحميل ملف الـ QR",
+    "#2563eb"
+);
         });
     });
     clearForm();
@@ -1207,6 +1210,10 @@ customers.forEach(function(customer) {
                 .catch(function(error) {
                     showCustomAlert("خطأ أثناء الحذف: " + error.message);
                 });
+                },
+    "تأكيد الحذف",
+    "#c53030"
+);
         });
     }
 
