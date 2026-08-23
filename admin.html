@@ -1178,8 +1178,7 @@ customers.forEach(function(customer) {
         downloadQR();
         clearForm();
     },
-    "تحميل ملف الـ QR",
-    "#2563eb"
+    "تحميل ملف الـ QR"
 );
         });
     });
@@ -1198,7 +1197,13 @@ customers.forEach(function(customer) {
             return;
         }
 
-        showCustomConfirm("هل أنت متأكد من حذف هذا العميل نهائياً؟", function() {
+        showCustomConfirm(
+    "هل أنت متأكد من حذف هذا العميل نهائياً؟",
+    function() {
+        // كود الحذف
+    },
+    "تأكيد الحذف"
+); {
             db.ref("customers/" + code).remove()
                 .then(function() {
                     showCustomAlert("تم حذف العميل بنجاح", function() {
