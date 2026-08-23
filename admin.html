@@ -1195,7 +1195,7 @@ customers.forEach(function(customer) {
     .catch(function(error) {
         showCustomAlert("خطأ أثناء الحفظ: " + error.message);
     });
-
+        {
     function deleteCustomer() {
         const code = SafeGetValue("code");
         if (!code) {
